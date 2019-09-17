@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tdml:testSuite 
+ xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" 
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ xmlns:ex="http://example.com" 
+ xmlns:daf="urn:ogf:dfdl:2013:imp:daffodil.apache.org:2018:ext"
+ defaultConfig="cfg"
+ defaultRoundTrip="onePass">
+ 
+  <tdml:defineConfig name="cfg">
+    <daf:tunables>
+      <daf:suppressSchemaDefinitionWarnings>
+        deprecatedPropertySeparatorPolicy
+        encodingErrorPolicyError
+        emptyElementParsePolicyError
+      </daf:suppressSchemaDefinitionWarnings>
+    </daf:tunables>
+  </tdml:defineConfig>
+
+  <tdml:unparserTestCase name="test1" model="com/tresys/cobol1/xsd/cobol1.dfdl.xsd">
+    <tdml:document>
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">1234567890123456789</tdml:documentPart>
+      <tdml:documentPart type="byte">0020161C</tdml:documentPart>
+      <tdml:documentPart type="byte">0020161C</tdml:documentPart>
+      <tdml:documentPart type="byte">0020161C</tdml:documentPart>
+      <tdml:documentPart type="byte">0020161C</tdml:documentPart>
+      <tdml:documentPart type="byte">99999C</tdml:documentPart>
+      <tdml:documentPart type="byte">270f</tdml:documentPart>
+      <tdml:documentPart type="byte">000f423f</tdml:documentPart>
+      <tdml:documentPart type="byte">00000002540be3ff</tdml:documentPart>
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">PROVIDER12345</tdml:documentPart>
+      <tdml:documentPart type="byte">0999999C</tdml:documentPart>
+      <tdml:documentPart type="byte">0999999C</tdml:documentPart>
+      <!-- 
+      The decimal point character in the string below should NOT be in the
+      data. It is there for now because Daffodil does not yet implement the "V"
+      character for dfdl:textNumberPattern indicating the location of an 
+      implied decimal point. 
+       -->
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">+9999999.99</tdml:documentPart>
+      
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">AA</tdml:documentPart>
+      <tdml:documentPart type="byte">0001869f</tdml:documentPart>
+      <tdml:documentPart type="byte">270f</tdml:documentPart>
+      <tdml:documentPart type="byte">03e7</tdml:documentPart>
+      <tdml:documentPart type="byte">F9</tdml:documentPart>
+      <tdml:documentPart type="byte">F8</tdml:documentPart>
+      <tdml:documentPart type="byte">F7</tdml:documentPart>
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">X</tdml:documentPart>
+      <tdml:documentPart type="text" encoding="ebcdic-cp-us">A12345678901234567890AB</tdml:documentPart>    
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+          <ex:MY-RECORD>
+           <CLAIM-NUMBER>1234567890123456789</CLAIM-NUMBER>
+        <ADMISSION-DATE>1961-02-01</ADMISSION-DATE>
+        <FROM-DATE>1961-02-01</FROM-DATE>
+        <THRU-DATE>1961-02-01</THRU-DATE>
+        <DISCHARGE-DATE>1961-02-01</DISCHARGE-DATE>
+        <FULL-DAYS>99999</FULL-DAYS>
+        <COINSURANCE-DAYS>9999</COINSURANCE-DAYS>
+        <LIFETIME-RES-DAYS>999999</LIFETIME-RES-DAYS>
+        <INTERMEDIARY-NUM>9999999999</INTERMEDIARY-NUM>
+        <PROVIDER>PROVIDER12345</PROVIDER>
+        <INPATIENT-DED>9999.99</INPATIENT-DED>
+        <BLOOD-DED>9999.99</BLOOD-DED>
+        <TOTAL-CHARGES>9999999.99</TOTAL-CHARGES>
+        <PATIENT-STATUS>AA</PATIENT-STATUS>
+        <BLOOD-PINTS-FURNISHED>99999</BLOOD-PINTS-FURNISHED>
+        <BLOOD-PINTS-REPLACED>9999</BLOOD-PINTS-REPLACED>
+        <SEQUENCE-COUNTER>999</SEQUENCE-COUNTER>
+        <BILL-SOURCE>9</BILL-SOURCE>
+        <BENEFITS-EXHAUST-IND>8</BENEFITS-EXHAUST-IND>
+        <BENEFITS-PAY-IND>7</BENEFITS-PAY-IND>
+        <AUTO-ADJUSTMENT-IND>X</AUTO-ADJUSTMENT-IND>
+        <INTERMEDIARY-CTRL-NUM>A12345678901234567890AB</INTERMEDIARY-CTRL-NUM>
+          </ex:MY-RECORD>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:unparserTestCase>
+    
+</tdml:testSuite>

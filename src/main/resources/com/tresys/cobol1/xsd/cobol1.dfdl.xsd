@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" 
+    targetNamespace="http://example.com"
+    xmlns:tns="http://example.com"
+    xmlns:ex="http://example.com"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions" >
+
+  <xs:include schemaLocation="org/apache/daffodil/xsd/DFDLGeneralFormat.dfdl.xsd"/>
+
+  <xs:element name="RECORDS" dfdl:lengthKind="implicit">
+    <xs:complexType>
+      <xs:sequence >
+        <xs:element maxOccurs="unbounded" ref="tns:MY-RECORD"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineFormat name="cobol1Format">
+        <dfdl:format ref="tns:GeneralFormatPortable"
+          alignment="1" 
+          alignmentUnits="bytes" 
+          binaryBooleanFalseRep="0" 
+          binaryBooleanTrueRep="1" 
+          binaryDecimalVirtualPoint="0" 
+          binaryFloatRep="ieee" 
+          binaryNumberCheckPolicy="strict" 
+          binaryPackedSignCodes="C D F C" 
+          byteOrder="bigEndian" 
+          calendarCenturyStart="53" 
+          calendarCheckPolicy="strict" 
+          calendarFirstDayOfWeek="Monday"           
+          calendarLanguage="en-US" 
+          calendarObserveDST="yes" 
+          calendarTimeZone="" 
+          choiceLengthKind="implicit" 
+          decimalSigned="yes" 
+          encoding="ebcdic-cp-us"  
+          fillByte="%#r00;" 
+          lengthKind="explicit" 
+          lengthUnits="bytes" 
+          occursCountKind="implicit" 
+          representation="binary"  
+          textBooleanFalseRep="%#r01;" 
+          textBooleanJustification="left" 
+          textBooleanPadCharacter="%SP;" 
+          textBooleanTrueRep="%#r00;" 
+          textCalendarJustification="left" 
+          textCalendarPadCharacter="0"
+          textNumberJustification="right" 
+          textNumberPadCharacter="0" 
+          textNumberRep="zoned" 
+          textNumberRounding="pattern" 
+          textNumberRoundingMode="roundUp" 
+          textPadKind="none" 
+          textStandardBase="10"
+          textStringJustification="left" 
+          textStringPadCharacter="%SP;" 
+          textTrimKind="none" 
+          textZonedSignStyle="asciiStandard"  
+          >
+        </dfdl:format>
+      </dfdl:defineFormat>
+      <dfdl:format ref="tns:cobol1Format"/>
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:element name="MY-RECORD" dfdl:lengthKind="implicit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:annotation>
+          <xs:documentation>
+<![CDATA[
+01 MY-RECORD. 
+ 05 CLAIM-NUMBER             PIC X(19). 
+ 05 ADMISSION-DATE           PACKED-DECIMAL PIC S9(7). 
+ 05 FROM-DATE                PACKED-DECIMAL PIC S9(7). 
+ 05 THRU-DATE                PACKED-DECIMAL PIC S9(7). 
+ 05 DISCHARGE-DATE           PACKED-DECIMAL PIC S9(7). 
+ 05 FULL-DAYS                PACKED-DECIMAL PIC S9(5). 
+ 05 COINSURANCE-DAYS         BINARY         PIC 9(4). 
+ 05 LIFETIME-RES-DAYS        BINARY         PIC 9(6). 
+ 05 INTERMEDIARY-NUM         BINARY         PIC 9(10). 
+ 05 PROVIDER                                PIC X(13). 
+ 05 INPATIENT-DED            PACKED-DECIMAL PIC S9(4)V99.
+ 05 BLOOD-DED                PACKED-DECIMAL PIC S9(4)V99.
+ 05 TOTAL-CHARGES      PIC S9(7)V99 DISPLAY SIGN LEADING.
+ 05 PATIENT-STATUS                          PIC X(2). 
+ 05 BLOOD-PINTS-FURNISHED    BINARY         PIC 9(5). 
+ 05 BLOOD-PINTS-REPLACED     BINARY         PIC 9(4). 
+ 05 SEQUENCE-COUNTER         BINARY         PIC 9(3). 
+ 05 TRANSACTION-IND                         PIC 9. 
+ 05 BILL-SOURCE                             PIC 9. 
+ 05 BENEFITS-EXHAUST-IND                    PIC 9. 
+ 05 BENEFITS-PAY-IND                        PIC 9. 
+ 05 AUTO-ADJUSTMENT-IND                     PIC X. 
+ 05 INTERMEDIARY-CTRL-NUM                   PIC X(23).
+]]>
+          </xs:documentation>
+        </xs:annotation>
+        <xs:element name="CLAIM-NUMBER" type="xs:string" dfdl:length="19" />
+        <xs:element name="ADMISSION-DATE" type="tns:signedPacked7DigitDate" />
+        <xs:element name="FROM-DATE" type="tns:signedPacked7DigitDate" />
+        <xs:element name="THRU-DATE" type="tns:signedPacked7DigitDate" />
+        <xs:element name="DISCHARGE-DATE" type="tns:signedPacked7DigitDate" />
+        <xs:element name="FULL-DAYS" type="tns:signedPackedInt5Digits" />
+        <xs:element name="COINSURANCE-DAYS" type="tns:binary4Digits" />
+        <xs:element name="LIFETIME-RES-DAYS" type="tns:binary6Digits" />
+        <xs:element name="INTERMEDIARY-NUM" type="tns:binary10Digits" />
+        <xs:element name="PROVIDER" type="xs:string" dfdl:length="13" />
+        <xs:element name="INPATIENT-DED" type="tns:packedMoney4Digits" />
+        <xs:element name="BLOOD-DED" type="tns:packedMoney4Digits" />
+        <xs:element name="TOTAL-CHARGES" type="tns:displayMoney7Digits" />
+        <xs:element name="PATIENT-STATUS" type="xs:string" dfdl:length="2" />
+        <xs:element name="BLOOD-PINTS-FURNISHED" type="tns:binary5Digits" />
+        <xs:element name="BLOOD-PINTS-REPLACED" type="tns:binary4Digits" />
+        <xs:element name="SEQUENCE-COUNTER" type="tns:binary3Digits" />
+        <xs:element name="BILL-SOURCE" type="tns:display1Digit" />
+        <xs:element name="BENEFITS-EXHAUST-IND" type="tns:display1Digit" />
+        <xs:element name="BENEFITS-PAY-IND" type="tns:display1Digit" />
+        <xs:element name="AUTO-ADJUSTMENT-IND" type="xs:string" dfdl:length="1" />
+        <xs:element name="INTERMEDIARY-CTRL-NUM" type="xs:string" dfdl:length="23" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- 
+    IBM DFDL doesn't support binaryCalendarRep="packed" so we have to 
+    hack around this using BCD, and surrounding things that create the 
+    leading 0 nibble, and trailing "C" nibble which would exist for packed.
+    -->
+  <xs:simpleType name="WORKAROUND_signedPacked7DigitDate" 
+    dfdl:alignmentUnits="bits"
+    dfdl:alignment="4"
+    dfdl:representation="binary"
+    dfdl:binaryCalendarRep="bcd"
+    dfdl:decimalSigned="yes" 
+    dfdl:length="3"
+    dfdl:lengthUnits="bytes" 
+    dfdl:calendarPattern="MMddyy" 
+    dfdl:calendarPatternKind="explicit">
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  
+  <!-- remove these if not using the BCD workaround -->
+  <xs:group name="skip0Nibble">
+    <xs:sequence dfdl:alignmentUnits="bits"
+    dfdl:alignment="4"
+    dfdl:fillByte="%#r00;"
+    dfdl:leadingSkip="4"/>
+  </xs:group>
+  
+   <xs:group name="skipCNibble">
+    <xs:sequence dfdl:alignmentUnits="bits"
+    dfdl:alignment="4"
+    dfdl:fillByte="%#rCC;"
+    dfdl:leadingSkip="4"/>
+  </xs:group>
+  
+  <!-- 
+  Original with "packed" rep
+   -->
+  <xs:simpleType name="signedPacked7DigitDate" 
+    dfdl:representation="binary"
+    dfdl:binaryCalendarRep="packed"
+    dfdl:decimalSigned="yes" 
+    dfdl:length="4" 
+    dfdl:calendarPattern="MMddyy" 
+    dfdl:calendarPatternKind="explicit">
+    <xs:restriction base="xs:date" />
+  </xs:simpleType>
+  
+  <xs:simpleType name="signedPackedInt5Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="packed"
+    dfdl:decimalSigned="yes" 
+    dfdl:length="3" >
+    <xs:restriction base="xs:int" >
+      <xs:maxInclusive value="99999"/>
+      <xs:minInclusive value="-99999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- TBD Alignment requirements for binary numbers? -->
+  
+  <xs:simpleType name="binary3Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="binary"
+    dfdl:length="2"> 
+    <xs:restriction base="xs:int">
+      <xs:maxInclusive value="999"/>
+      <xs:minInclusive value="-999"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  
+  <xs:simpleType name="binary4Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="binary"
+    dfdl:length="2"> 
+    <xs:restriction base="xs:int">
+      <xs:maxInclusive value="9999"/>
+      <xs:minInclusive value="-9999"/>
+    </xs:restriction>
+  </xs:simpleType>  
+  
+  <xs:simpleType name="binary5Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="binary"
+    dfdl:length="4"> 
+    <xs:restriction base="xs:int" >
+      <xs:maxInclusive value="99999"/>
+      <xs:minInclusive value="-99999"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  
+  <xs:simpleType name="binary6Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="binary"
+    dfdl:length="4"> 
+    <xs:restriction base="xs:int" >
+      <xs:maxInclusive value="999999"/>
+      <xs:minInclusive value="-999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="binary10Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="binary"
+    dfdl:length="8"> 
+    <xs:restriction base="xs:long" >
+      <xs:maxInclusive value="9999999999"/>
+      <xs:minInclusive value="-9999999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="packedMoney4Digits" 
+    dfdl:representation="binary"
+    dfdl:binaryNumberRep="packed"
+    dfdl:decimalSigned="yes" 
+    dfdl:length="4"
+    dfdl:binaryDecimalVirtualPoint="2">
+    <xs:restriction base="xs:decimal" >
+      <xs:maxInclusive value="9999.99"/>
+      <xs:minInclusive value="-9999.99"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+<!-- 
+  The type below is incorrect. It should be 10 bytes long and use an 
+  implied decimal point, i.e., the dfdl:textNumberPattern should be 
+  "+######0V00;-######0V00". However, this "V" is not implemented yet in 
+  Daffodil as of 2019-09-17.
+ -->
+  <xs:simpleType name="displayMoney7Digits" 
+    dfdl:representation="text"
+    dfdl:textNumberRep="standard"
+    dfdl:decimalSigned="yes"
+    dfdl:textNumberPattern="+######0.00;-######0.00" 
+    dfdl:length="11">
+    <xs:restriction base="xs:decimal" >
+      <xs:maxInclusive value="9999999.99"/>
+      <xs:minInclusive value="-9999999.99"/>
+    </xs:restriction>
+  </xs:simpleType>    
+  
+  <xs:simpleType name="display1Digit" 
+    dfdl:representation="text"
+    dfdl:textNumberRep="zoned"
+    dfdl:textNumberPattern="+0" 
+    dfdl:decimalSigned="no" 
+    dfdl:length="1">
+    <xs:restriction base="xs:unsignedInt" >
+      <xs:maxInclusive value="9"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>
